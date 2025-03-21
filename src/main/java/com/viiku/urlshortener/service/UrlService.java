@@ -6,7 +6,6 @@ import com.viiku.urlshortener.repository.UrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// This file will contain url shortening logic
 @Service
 public class UrlService {
 
