@@ -1,29 +1,12 @@
-package com.viiku.urlshortener;
+package com.viiku.urlshortener.model;
 
 import java.util.Date;
 
-public class CreateUrlShortener {
-    String id;
-    String userId;
-    String originalUrl;
-    String customAlias;
-    Date expiryDate;
-
-    public CreateUrlShortener(String id, String userId, String originalUrl, String customAlias, Date expiryDate) {
-        this.id = id;
-        this.userId = userId;
-        this.originalUrl = originalUrl;
-        this.customAlias = customAlias;
-        this.expiryDate = expiryDate;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+public class UrlRequestModel {
+    private String userId;
+    private String originalUrl;
+    private String customAlias;
+    private Date expiryDate;
 
     public String getUserId() {
         return userId;

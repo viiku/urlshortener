@@ -1,42 +1,29 @@
 package com.viiku.urlshortener.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Table(name = "url")
+@Entity
 public class Url {
-    String userId;
-    String originalUrl;
-    String customAlias;
-    Date expiryDate;
 
-    public String getUserId() {
-        return userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Ensure this is present
+    private Long id;
+
+    private String userId;
+    private String originalUrl;
+    private String customAlias;
+    private Date expiryDate;
+
+    public Url() {
     }
 
-    public void setUserId(String userId) {
+    public Url(String userId, String originalUrl, String customAlias, Date expiryDate) {
         this.userId = userId;
-    }
-
-    public String getOriginalUrl() {
-        return originalUrl;
-    }
-
-    public void setOriginalUrl(String originalUrl) {
         this.originalUrl = originalUrl;
-    }
-
-    public String getCustomAlias() {
-        return customAlias;
-    }
-
-    public void setCustomAlias(String customAlias) {
         this.customAlias = customAlias;
-    }
-
-    public Date getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
 }

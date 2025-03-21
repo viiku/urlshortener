@@ -1,27 +1,29 @@
 package com.viiku.urlshortener.controller;
 
-import com.viiku.urlshortener.CreateUrlShortener;
 import com.viiku.urlshortener.model.Url;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.viiku.urlshortener.service.UrlService;
+import com.viiku.urlshortener.model.UrlRequestModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/shorten")
+@RequestMapping("/api/v1")
 public class UrlController {
 
-    @PostMapping
-    public String createShortURL(@RequestBody Url url) {
-        CreateUrlShortener createUrlShortener = new CreateUrlShortener(
-                UUID.randomUUID().toString(),
-                url.getUserId(),
-                url.getOriginalUrl(),
-                url.getCustomAlias(),
-                url.getExpiryDate()
-        );
-        return "URL shorten service";
+    @Autowired
+    private UrlService urlService;
+
+    @PostMapping("/shorten")
+    public String createShortURL(@RequestBody UrlRequestModel urlRequestModel) {
+
+        String shortURL = urlService.generateShortURL(urlRequestModel);
+        return shortURL;
+    }
+
+    @GetMapping("/url")
+    public String getShortenURL() {
+        return "Shorted URL";
     }
 }
