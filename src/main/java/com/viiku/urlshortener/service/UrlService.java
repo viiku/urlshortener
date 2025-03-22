@@ -13,7 +13,6 @@ public class UrlService {
     private UrlRepository urlRepository;
 
     public String generateShortURL(UrlRequestModel urlRequestModel) {
-        System.out.println(urlRequestModel);
 
         Url url = new Url(
                 urlRequestModel.getUserId(),
@@ -23,6 +22,7 @@ public class UrlService {
         );
 
         urlRepository.save(url);
-        return "test";
+
+        return "http://short.url/" + (urlRequestModel.getCustomAlias() != null ? urlRequestModel.getCustomAlias() : "defaultAlias");
     }
 }
