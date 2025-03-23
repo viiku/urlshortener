@@ -1,0 +1,13 @@
+name: 'Java App CI'
+description: 'Running CI for Java Based application'
+
+on:
+  push:
+    branches:
+      - ''
+
+  workflow_dispatch:
+
+jobs:
+  app-ci:
+    runs-on:
