@@ -1,11 +1,19 @@
 package com.viiku.urlshortener.model;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 public class UrlRequestModel {
+
+    @NotBlank(message = "UserId can not be blank")
     private String userId;
+
+    @NotBlank(message = "Original URL can not be blank")
     private String originalUrl;
+
     private String customAlias;
+
     private Date expiryDate;
 
     public String getUserId() { return userId; }
