@@ -2,7 +2,7 @@ package com.viiku.urlshortener.url.service.impl;
 
 import com.viiku.urlshortener.url.mapper.UrlMapper;
 import com.viiku.urlshortener.url.model.Url;
-import com.viiku.urlshortener.url.model.dto.UrlRequestModel;
+import com.viiku.urlshortener.url.model.payload.request.UrlRequest;
 import com.viiku.urlshortener.url.model.entity.UrlEntity;
 import com.viiku.urlshortener.url.repository.UrlRepository;
 import com.viiku.urlshortener.url.service.UrlService;
@@ -30,7 +30,7 @@ public class UrlServiceImpl implements UrlService {
      * @return the generated short URL.
      */
     @Override
-    public Url createShortUrl(UrlRequestModel urlRequestModel) {
+    public Url createShortUrl(UrlRequest urlRequestModel) {
 
         String shortUrlCode = generateShortUrl(urlRequestModel.getOriginalUrl(), urlRequestModel.getCustomAlias());
 
