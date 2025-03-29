@@ -13,5 +13,10 @@ public interface BaseMapper<S, T> {
     /**
      * Maps a single source to a target type
      */
-    T map(S source);
+    T mapToTarget(S source);
+
+    /**
+     * Maps to single Target to Source type
+     */
+    S mapToEntity(T target);
 }

@@ -9,7 +9,7 @@ import com.viiku.urlshortener.url.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.viiku.urlshortener.util.UrlShortenerUtil.generateShortUrl;
+import static com.viiku.urlshortener.util.UrlShortenerGenerator.generateShortUrl;
 
 /**
  * Service class named {@link UrlServiceImpl}
@@ -42,7 +42,7 @@ public class UrlServiceImpl implements UrlService {
                 .build();
 
         UrlEntity savedEntity = urlRepository.save(urlEntity);
-        return urlMapper.map(savedEntity);
+        return urlMapper.mapToTarget(savedEntity);
     }
 
 
@@ -57,7 +57,7 @@ public class UrlServiceImpl implements UrlService {
         UrlEntity urlEntity = urlRepository.findByShortUrl(shortUrlCode)
                 .orElseThrow(() -> new RuntimeException("Short URL not found: " + shortUrlCode));
 
-        return urlMapper.map(urlEntity);
+        return urlMapper.mapToTarget(urlEntity);
     }
 
     /**

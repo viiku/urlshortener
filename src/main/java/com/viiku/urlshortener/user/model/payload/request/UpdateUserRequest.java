@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserRequest {
+public class UpdateUserRequest {
 
     private String firstName;
     private String middleName;
