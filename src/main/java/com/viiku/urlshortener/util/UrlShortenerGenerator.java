@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
 
-public class UrlShortenerUtil {
+public class UrlShortenerGenerator {
 
     public static String generateShortUrl(String url, String alias) {
 

@@ -25,6 +25,7 @@ public class UrlEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false)
     private String id;
 
 //    private String userId;

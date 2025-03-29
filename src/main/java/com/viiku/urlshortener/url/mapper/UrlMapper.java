@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class UrlMapper implements BaseMapper<UrlEntity, Url> {
 
     @Override
-    public Url map(UrlEntity source) {
+    public Url mapToTarget(UrlEntity source) {
         if (source == null) {
             return null;
         }
@@ -24,6 +24,20 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
                 .expiryDate(source.getExpiryDate())
                 .createdAt(source.getCreatedAt())
                 .updatedAt(source.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public UrlEntity mapToEntity(Url target) {
+        if (target == null) {
+            return null;
+        }
+        return UrlEntity.builder()
+                .id(target.getId())
+                .originalUrl(target.getOriginalUrl())
+                .shortUrl(target.getShortUrl())
+                .customAlias(target.getCustomAlias())
+                .expiryDate(target.getExpiryDate())
                 .build();
     }
 }
