@@ -1,28 +1,33 @@
 package com.viiku.urlshortener.url.model.entity;
 
 import com.viiku.urlshortener.common.model.entity.BaseEntity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
+/**
+ * Entity class {@link UrlEntity} extends {@link BaseEntity}
+ */
+
 @Getter
 @Setter
+@Entity
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "URLS")
 public class UrlEntity extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // Ensure this is present
-    private Long id;
 
-    private String userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+//    private String userId;
     private String originalUrl;
     private String shortUrl;
     private String customAlias;

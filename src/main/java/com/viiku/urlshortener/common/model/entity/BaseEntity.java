@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- * Abstract base class named {@link BaseEntity} for entities, providing created and updated timestamps.
+ * Abstract base class named {@link BaseEntity} for entities,
+ * providing created and updated timestamps.
  */
+
 @Getter
 @Setter
 @SuperBuilder
@@ -24,15 +26,23 @@ import java.util.Optional;
 @AllArgsConstructor
 public abstract class BaseEntity {
 
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "UPDATED_AT")
+    @Column(name = "UPDATED_AT", updatable = true)
     private LocalDateTime updatedAt;
 
     @PrePersist
     public void prePersist() {
+
+        /**
+         * Ensures @param createdAt is set at creation (@PrePersist).
+         * Ensures @param updatedAt is set at creation (@PrePersist).
+         */
         this.createdAt = Optional.ofNullable(this.createdAt)
+                .orElse(LocalDateTime.now());
+
+        this.updatedAt = Optional.ofNullable(this.updatedAt)
                 .orElse(LocalDateTime.now());
     }
 
