@@ -1,0 +1,7 @@
+Url controller should use UrlResponse DTO
+Improvement in User class for returning correct response
+Improvement in Url class for returning correct response
+Better validation
+Exception handling at the controller level (e.g., @ControllerAdvice)?
+Rate limiting for URL shortening?
+Database caching (Redis) for better performance?

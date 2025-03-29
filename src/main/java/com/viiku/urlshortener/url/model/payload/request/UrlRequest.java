@@ -1,4 +1,4 @@
-package com.viiku.urlshortener.url.model.dto;
+package com.viiku.urlshortener.url.model.payload.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UrlRequestModel {
+public class UrlRequest {
 
 //    @NotBlank(message = "UserId can not be blank")
 //    private String userId;
