@@ -4,6 +4,7 @@ import com.viiku.urlshortener.url.mapper.UrlMapper;
 import com.viiku.urlshortener.url.model.Url;
 import com.viiku.urlshortener.url.model.payload.request.UrlRequest;
 import com.viiku.urlshortener.url.model.entity.UrlEntity;
+import com.viiku.urlshortener.url.model.payload.response.UrlResponse;
 import com.viiku.urlshortener.url.repository.UrlRepository;
 import com.viiku.urlshortener.url.service.UrlService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class UrlServiceImpl implements UrlService {
      * @return the generated short URL.
      */
     @Override
-    public Url createShortUrl(UrlRequest urlRequestModel) {
+    public UrlResponse createShortUrl(UrlRequest urlRequestModel) {
 
         String shortUrlCode = generateShortUrl(urlRequestModel.getOriginalUrl(), urlRequestModel.getCustomAlias());
 
@@ -42,7 +43,8 @@ public class UrlServiceImpl implements UrlService {
                 .build();
 
         UrlEntity savedEntity = urlRepository.save(urlEntity);
-        return urlMapper.mapToTarget(savedEntity);
+        Url url = urlMapper.mapToTarget(savedEntity);
+        return urlMapper.mapToResponse(url);
     }
 
 
@@ -53,11 +55,13 @@ public class UrlServiceImpl implements UrlService {
      * @return the original URL if found.
      */
     @Override
-    public Url getShortUrl(String shortUrlCode) {
+    public UrlResponse getShortUrl(String shortUrlCode) {
         UrlEntity urlEntity = urlRepository.findByShortUrl(shortUrlCode)
                 .orElseThrow(() -> new RuntimeException("Short URL not found: " + shortUrlCode));
 
-        return urlMapper.mapToTarget(urlEntity);
+        Url url = urlMapper.mapToTarget(urlEntity);
+
+        return urlMapper.mapToResponse(url);
     }
 
     /**
