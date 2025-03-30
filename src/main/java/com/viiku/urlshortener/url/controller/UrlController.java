@@ -2,6 +2,7 @@ package com.viiku.urlshortener.url.controller;
 
 import com.viiku.urlshortener.url.model.Url;
 import com.viiku.urlshortener.url.model.payload.request.UrlRequest;
+import com.viiku.urlshortener.url.model.payload.response.UrlResponse;
 import com.viiku.urlshortener.url.service.UrlService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +24,16 @@ public class UrlController {
 
     @PostMapping("/shorten")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Url> createShortUrl(@Valid @RequestBody UrlRequest urlRequestModel) {
-        Url url = urlService.createShortUrl(urlRequestModel);
-        return ResponseEntity.ok(url);
+    public ResponseEntity<UrlResponse> createShortUrl(@Valid @RequestBody UrlRequest urlRequestModel) {
+        UrlResponse urlResponse = urlService.createShortUrl(urlRequestModel);
+        return ResponseEntity.ok(urlResponse);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Url> getShortUrl(@PathVariable String id) {
-        Url url = urlService.getShortUrl(id);
-        return ResponseEntity.ok(url);
+    public ResponseEntity<UrlResponse> getShortUrl(@PathVariable String id) {
+        UrlResponse urlResponse = urlService.getShortUrl(id);
+        return ResponseEntity.ok(urlResponse);
     }
 
 }

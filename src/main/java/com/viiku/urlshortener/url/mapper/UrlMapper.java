@@ -3,6 +3,7 @@ package com.viiku.urlshortener.url.mapper;
 import com.viiku.urlshortener.common.model.mapper.BaseMapper;
 import com.viiku.urlshortener.url.model.Url;
 import com.viiku.urlshortener.url.model.entity.UrlEntity;
+import com.viiku.urlshortener.url.model.payload.response.UrlResponse;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,5 +40,13 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
                 .customAlias(target.getCustomAlias())
                 .expiryDate(target.getExpiryDate())
                 .build();
+    }
+
+    public UrlResponse mapToResponse(Url url) {
+        if (url == null) {
+            return null;
+        }
+
+        return new UrlResponse(url.getOriginalUrl(), url.getShortUrl());
     }
 }
