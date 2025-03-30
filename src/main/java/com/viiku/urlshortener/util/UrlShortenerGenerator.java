@@ -12,7 +12,7 @@ public class UrlShortenerGenerator {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(url.getBytes(StandardCharsets.UTF_8));
             String hashedString = Base64.getUrlEncoder().withoutPadding().encodeToString(hash).substring(0, 8);
-            return "https://"+ hashedString;
+            return "https://"+alias+ hashedString;
         } catch (Exception e) {
             throw new RuntimeException("Error generating short URL", e);
         }

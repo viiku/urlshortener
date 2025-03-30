@@ -28,9 +28,9 @@ public class UrlEntity extends BaseEntity {
     @Column(name = "id", updatable = false)
     private String id;
 
-//    private String userId;
     private String originalUrl;
     private String shortUrl;
     private String customAlias;
+    private String shortUrlCode;
     private Date expiryDate;
 }

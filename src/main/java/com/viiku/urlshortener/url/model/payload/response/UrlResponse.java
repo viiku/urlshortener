@@ -12,4 +12,5 @@ import lombok.Setter;
 public class UrlResponse {
     private String originalUrl;
     private String shortUrl;
+    private String shortUrlCode;
 }
