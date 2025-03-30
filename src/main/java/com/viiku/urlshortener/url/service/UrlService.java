@@ -9,7 +9,7 @@ import com.viiku.urlshortener.url.model.payload.response.UrlResponse;
 
 public interface UrlService {
 
-    UrlResponse createShortUrl(UrlRequest urlRequestModel);
+    UrlResponse createShortUrl(UrlRequest urlRequest);
 
     UrlResponse getShortUrl(String shortUrlCode);
 }

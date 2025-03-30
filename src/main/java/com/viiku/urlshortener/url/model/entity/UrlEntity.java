@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -31,6 +32,9 @@ public class UrlEntity extends BaseEntity {
     private String originalUrl;
     private String shortUrl;
     private String customAlias;
-    private String shortUrlCode;
-    private Date expiryDate;
+
+    @Column(unique = true, nullable = false)
+    private String shortCode;
+
+    private LocalDateTime expiryDate;
 }
