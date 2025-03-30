@@ -22,6 +22,7 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
                 .originalUrl(source.getOriginalUrl())
                 .shortUrl(source.getShortUrl())
                 .customAlias(source.getCustomAlias())
+                .shortUrlCode(source.getCustomAlias())
                 .expiryDate(source.getExpiryDate())
                 .createdAt(source.getCreatedAt())
                 .updatedAt(source.getUpdatedAt())
@@ -47,6 +48,6 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
             return null;
         }
 
-        return new UrlResponse(url.getOriginalUrl(), url.getShortUrl());
+        return new UrlResponse(url.getOriginalUrl(), url.getShortUrl(), url.getShortUrlCode());
     }
 }

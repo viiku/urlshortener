@@ -35,5 +35,4 @@ public class UrlController {
         UrlResponse urlResponse = urlService.getShortUrl(id);
         return ResponseEntity.ok(urlResponse);
     }
-
 }

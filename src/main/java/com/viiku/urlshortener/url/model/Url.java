@@ -25,6 +25,7 @@ public class Url extends BaseDomainModel {
     private String originalUrl;
     private String shortUrl;
     private String customAlias;
+    private String shortUrlCode;
     private Date expiryDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -27,19 +27,27 @@ public class UrlServiceImpl implements UrlService {
     /**
      * Creates a short URL from the given request model.
      *
-     * @param urlRequestModel contains the original long URL.
+     * @param urlRequest contains the original long URL.
      * @return the generated short URL.
      */
     @Override
-    public UrlResponse createShortUrl(UrlRequest urlRequestModel) {
+    public UrlResponse createShortUrl(UrlRequest urlRequest) {
 
-        String shortUrlCode = generateShortUrl(urlRequestModel.getOriginalUrl(), urlRequestModel.getCustomAlias());
+        if (urlRequest.getCustomAlias() == null) {
+            /**
+             * If @param customAlias is not present then use default alias
+             */
+            urlRequest.setCustomAlias("default");
+        }
+
+        String shortUrl = generateShortUrl(urlRequest.getOriginalUrl(), urlRequest.getCustomAlias());
 
         UrlEntity urlEntity = UrlEntity.builder()
-                .originalUrl(urlRequestModel.getOriginalUrl())
-                .shortUrl(shortUrlCode)
-                .customAlias(urlRequestModel.getCustomAlias())
-                .expiryDate(urlRequestModel.getExpiryDate())
+                .originalUrl(urlRequest.getOriginalUrl())
+                .shortUrl(shortUrl)
+                .customAlias(urlRequest.getCustomAlias())
+                .shortUrlCode(urlRequest.getCustomAlias())
+                .expiryDate(urlRequest.getExpiryDate())
                 .build();
 
         UrlEntity savedEntity = urlRepository.save(urlEntity);
@@ -63,12 +71,4 @@ public class UrlServiceImpl implements UrlService {
 
         return urlMapper.mapToResponse(url);
     }
-
-    /**
-     * Generates a random short URL code.
-     * @return a unique short URL identifier.
-     */
-/*    private String generateShortUrl() {
-        return UUID.randomUUID().toString().substring(0, 8); // Example: 8-character hash
-    }*/
 }
