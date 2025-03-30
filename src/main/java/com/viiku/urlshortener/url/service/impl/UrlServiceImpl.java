@@ -37,7 +37,7 @@ public class UrlServiceImpl implements UrlService {
             /**
              * If @param customAlias is not present then use default alias
              */
-            urlRequest.setCustomAlias = "default";
+            urlRequest.setCustomAlias("default");
         }
 
         String shortUrl = generateShortUrl(urlRequest.getOriginalUrl(), urlRequest.getCustomAlias());
