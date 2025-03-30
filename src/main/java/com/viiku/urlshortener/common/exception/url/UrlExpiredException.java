@@ -1,4 +1,4 @@
-package com.viiku.urlshortener.common.exception;
+package com.viiku.urlshortener.common.exception.url;
 
 public class UrlExpiredException extends RuntimeException {
     public UrlExpiredException(String shortUrl) {
