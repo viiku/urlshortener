@@ -1,6 +1,6 @@
 package com.viiku.urlshortener.url.service.impl;
 
-import com.viiku.urlshortener.common.exception.UrlExpiredException;
+import com.viiku.urlshortener.common.exception.url.UrlExpiredException;
 import com.viiku.urlshortener.url.mapper.UrlMapper;
 import com.viiku.urlshortener.url.model.Url;
 import com.viiku.urlshortener.url.model.payload.request.UrlRequest;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 import static com.viiku.urlshortener.util.UrlShortenerGenerator.generateShortUrl;
