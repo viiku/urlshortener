@@ -18,14 +18,14 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
             return null;
         }
         return Url.builder()
-                .id(source.getId())
+//                .id(source.getId())
                 .originalUrl(source.getOriginalUrl())
                 .shortUrl(source.getShortUrl())
                 .customAlias(source.getCustomAlias())
-                .shortUrlCode(source.getCustomAlias())
+                .shortCode(source.getCustomAlias())
                 .expiryDate(source.getExpiryDate())
                 .createdAt(source.getCreatedAt())
-                .updatedAt(source.getUpdatedAt())
+//                .updatedAt(source.getUpdatedAt())
                 .build();
     }
 
@@ -35,10 +35,11 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
             return null;
         }
         return UrlEntity.builder()
-                .id(target.getId())
+//                .id(target.getId())
                 .originalUrl(target.getOriginalUrl())
                 .shortUrl(target.getShortUrl())
                 .customAlias(target.getCustomAlias())
+                .shortCode(target.getShortCode())
                 .expiryDate(target.getExpiryDate())
                 .build();
     }
@@ -48,6 +49,6 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
             return null;
         }
 
-        return new UrlResponse(url.getOriginalUrl(), url.getShortUrl(), url.getShortUrlCode());
+        return new UrlResponse(url.getOriginalUrl(), url.getShortUrl(), url.getShortCode(), url.getCreatedAt(), url.getExpiryDate());
     }
 }

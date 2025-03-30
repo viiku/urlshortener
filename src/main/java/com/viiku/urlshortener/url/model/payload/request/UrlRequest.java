@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -17,6 +18,5 @@ public class UrlRequest {
     private String originalUrl;
 
     private String customAlias;
-
-    private Date expiryDate;
+    private LocalDateTime expiryDate;
 }

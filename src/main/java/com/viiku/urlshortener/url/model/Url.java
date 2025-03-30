@@ -21,12 +21,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class Url extends BaseDomainModel {
 
-    private String id;
+//    private String id;
     private String originalUrl;
     private String shortUrl;
     private String customAlias;
-    private String shortUrlCode;
-    private Date expiryDate;
+    private String shortCode;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime expiryDate;
 }
