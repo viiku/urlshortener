@@ -13,15 +13,11 @@ import com.viiku.urlshortener.url.service.UrlService;
 import com.viiku.urlshortener.util.Base62Encoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.viiku.urlshortener.config.RedisConfig.*;
 
-//import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
-
-import static com.viiku.urlshortener.util.Base62Encoder.generateShortCode;
-
-//import static com.viiku.urlshortener.util.UrlShortenerGenerator.generateShortUrl;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Service class named {@link UrlServiceImpl}
@@ -34,6 +30,10 @@ public class UrlServiceImpl implements UrlService {
 
     private final UrlRepository urlRepository;
     private final UrlMapper urlMapper;
+    private final RedisTemplate<String, String> redisTemplate;
+
+    private static final String REDIS_KEY_PREFIX = "shorturl:";
+    private static final long CACHE_TTL_HOURS = 24;
 
     /**
      * Creates a short URL from the given request model.
@@ -73,6 +73,8 @@ public class UrlServiceImpl implements UrlService {
                 .build();
 
         UrlEntity savedEntity = urlRepository.save(urlEntity);
+        cacheUrlInRedis(savedEntity);
+
         Url url = urlMapper.mapToTarget(savedEntity);
         return urlMapper.mapToResponse(url);
     }
@@ -86,6 +88,11 @@ public class UrlServiceImpl implements UrlService {
      */
     @Override
     public UrlResponse getOriginalUrl(String shortCode) {
+
+        String cachedUrl = redisTemplate.opsForValue().get(REDIS_KEY_PREFIX + shortCode);
+        if (cachedUrl != null) {
+            return cachedUrl;
+        }
 
         UrlEntity urlEntity = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new RuntimeException("Short URL not found: " + shortCode));
@@ -103,5 +110,15 @@ public class UrlServiceImpl implements UrlService {
     private String buildCompleteShortUrl(String shortCode) {
         String domain = "https://short.url/";
         return domain + shortCode;
+    }
+
+    private void cacheUrlInRedis(UrlEntity urlEntity) {
+        String key = REDIS_KEY_PREFIX + urlEntity.getShortCode();
+        redisTemplate.opsForValue().set(
+                key,
+                urlEntity.getOriginalUrl(),
+                CACHE_TTL_HOURS,
+                TimeUnit.HOURS
+        );
     }
 }
