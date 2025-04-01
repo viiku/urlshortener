@@ -1,5 +1,7 @@
 package com.viiku.urlshortener.url.service.impl;
 
+import com.viiku.urlshortener.common.exception.url.ShortCodeAlreadyExistsException;
+import com.viiku.urlshortener.common.exception.url.ShortCodeGenerationException;
 import com.viiku.urlshortener.common.exception.url.UrlExpiredException;
 import com.viiku.urlshortener.url.mapper.UrlMapper;
 import com.viiku.urlshortener.url.model.Url;
@@ -8,13 +10,18 @@ import com.viiku.urlshortener.url.model.entity.UrlEntity;
 import com.viiku.urlshortener.url.model.payload.response.UrlResponse;
 import com.viiku.urlshortener.url.repository.UrlRepository;
 import com.viiku.urlshortener.url.service.UrlService;
+import com.viiku.urlshortener.util.Base62Encoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+//import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
-import static com.viiku.urlshortener.util.UrlShortenerGenerator.generateShortUrl;
+import static com.viiku.urlshortener.util.Base62Encoder.generateShortCode;
+
+//import static com.viiku.urlshortener.util.UrlShortenerGenerator.generateShortUrl;
 
 /**
  * Service class named {@link UrlServiceImpl}
@@ -37,23 +44,31 @@ public class UrlServiceImpl implements UrlService {
     @Override
     public UrlResponse createShortUrl(UrlRequest urlRequest) {
 
-        if (urlRequest.getCustomAlias() == null) {
-            /**
-             * If @param customAlias is not present then use default alias
-             */
-            urlRequest.setCustomAlias("default");
+        String shortCode = Optional.ofNullable(urlRequest.getCustomAlias())
+                .filter(alias -> !alias.isEmpty())
+                .orElseGet(() -> Base62Encoder.generateShortCode());
+
+        if (urlRepository.existsByShortCode(shortCode)) {
+            if (urlRequest.getCustomAlias() == null) {
+                shortCode = Base62Encoder.generateShortCode();
+                if (urlRepository.existsByShortCode(shortCode)) {
+                    throw new ShortCodeGenerationException();
+                }
+            } else {
+                throw new ShortCodeAlreadyExistsException(shortCode);
+            }
         }
 
         LocalDateTime expiryDate = Optional.ofNullable(urlRequest.getExpiryDate())
                 .orElse(LocalDateTime.now().plusDays(30));
 
-        String shortUrl = generateShortUrl(urlRequest.getOriginalUrl(), urlRequest.getCustomAlias());
+        String shortUrl = buildCompleteShortUrl(shortCode);
 
         UrlEntity urlEntity = UrlEntity.builder()
                 .originalUrl(urlRequest.getOriginalUrl())
                 .shortUrl(shortUrl)
                 .customAlias(urlRequest.getCustomAlias())
-                .shortCode(urlRequest.getCustomAlias())
+                .shortCode(shortCode)
                 .expiryDate(expiryDate)
                 .build();
 
@@ -70,8 +85,9 @@ public class UrlServiceImpl implements UrlService {
      * @return the original URL if found.
      */
     @Override
-    public UrlResponse getShortUrl(String shortCode) {
-        UrlEntity urlEntity = urlRepository.findByShortUrl(shortCode)
+    public String getOriginalUrl(String shortCode) {
+
+        UrlEntity urlEntity = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new RuntimeException("Short URL not found: " + shortCode));
 
         if (urlEntity.getExpiryDate() != null &&
@@ -80,6 +96,12 @@ public class UrlServiceImpl implements UrlService {
         }
 
         Url url = urlMapper.mapToTarget(urlEntity);
-        return urlMapper.mapToResponse(url);
+        return url.getOriginalUrl();
+//        return urlMapper.mapToResponse(url);
+    }
+
+    private String buildCompleteShortUrl(String shortCode) {
+        String domain = "https://short.url/";
+        return domain + shortCode;
     }
 }

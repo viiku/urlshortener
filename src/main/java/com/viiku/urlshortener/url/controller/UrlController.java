@@ -1,6 +1,5 @@
 package com.viiku.urlshortener.url.controller;
 
-import com.viiku.urlshortener.url.model.Url;
 import com.viiku.urlshortener.url.model.payload.request.UrlRequest;
 import com.viiku.urlshortener.url.model.payload.response.UrlResponse;
 import com.viiku.urlshortener.url.service.UrlService;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.net.URI;
 
 /**
  * Rest Controller class {@link UrlController},
@@ -29,10 +29,15 @@ public class UrlController {
         return ResponseEntity.ok(urlResponse);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{shortCode}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<UrlResponse> getShortUrl(@PathVariable String id) {
-        UrlResponse urlResponse = urlService.getShortUrl(id);
-        return ResponseEntity.ok(urlResponse);
+    public ResponseEntity<Void> redirectToOriginalUrl(@PathVariable String shortCode) {
+//        UrlResponse urlResponse = urlService.getOriginalUrl(shortCode);
+//        return ResponseEntity.ok(urlResponse);
+
+        String originalUrl = urlService.getOriginalUrl(shortCode);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .location(URI.create(originalUrl))
+                .build();
     }
 }
