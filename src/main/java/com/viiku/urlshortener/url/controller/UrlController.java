@@ -31,13 +31,13 @@ public class UrlController {
 
     @GetMapping("/{shortCode}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Void> redirectToOriginalUrl(@PathVariable String shortCode) {
-//        UrlResponse urlResponse = urlService.getOriginalUrl(shortCode);
-//        return ResponseEntity.ok(urlResponse);
+    public ResponseEntity<UrlResponse> redirectToOriginalUrl(@PathVariable String shortCode) {
+        UrlResponse urlResponse = urlService.getOriginalUrl(shortCode);
+        return ResponseEntity.ok(urlResponse);
 
-        String originalUrl = urlService.getOriginalUrl(shortCode);
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create(originalUrl))
-                .build();
+//        String originalUrl = urlService.getOriginalUrl(shortCode);
+//        return ResponseEntity.status(HttpStatus.FOUND)
+//                .location(URI.create(originalUrl))
+//                .build();
     }
 }

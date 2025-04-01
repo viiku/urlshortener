@@ -85,7 +85,7 @@ public class UrlServiceImpl implements UrlService {
      * @return the original URL if found.
      */
     @Override
-    public String getOriginalUrl(String shortCode) {
+    public UrlResponse getOriginalUrl(String shortCode) {
 
         UrlEntity urlEntity = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new RuntimeException("Short URL not found: " + shortCode));
@@ -96,8 +96,8 @@ public class UrlServiceImpl implements UrlService {
         }
 
         Url url = urlMapper.mapToTarget(urlEntity);
-        return url.getOriginalUrl();
-//        return urlMapper.mapToResponse(url);
+//        return url.getOriginalUrl();
+        return urlMapper.mapToResponse(url);
     }
 
     private String buildCompleteShortUrl(String shortCode) {
