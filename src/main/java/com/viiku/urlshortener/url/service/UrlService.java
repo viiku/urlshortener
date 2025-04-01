@@ -11,6 +11,6 @@ public interface UrlService {
 
     UrlResponse createShortUrl(UrlRequest urlRequest);
 
-//    UrlResponse getOriginalUrl(String shortUrlCode);
-    String getOriginalUrl(String shortUrlCode);
+    UrlResponse getOriginalUrl(String shortUrlCode);
+//    String getOriginalUrl(String shortUrlCode);
 }
