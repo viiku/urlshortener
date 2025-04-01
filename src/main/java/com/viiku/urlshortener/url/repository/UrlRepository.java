@@ -14,10 +14,17 @@ import java.util.Optional;
 public interface UrlRepository extends JpaRepository<UrlEntity, String>{
 
     /**
+     * Check if shortCode already exists in Database
+     *
+     * @param shortCode the unique short URL identifier.
+     */
+    boolean existsByShortCode(String shortCode);
+
+    /**
      * Finds a URL entity by its short URL code.
      *
-     * @param shortUrl the unique short URL identifier.
+     * @param shortCode the unique short URL identifier.
      * @return an Optional containing the UrlEntity if found, otherwise empty.
      */
-    Optional<UrlEntity> findByShortUrl(String shortUrl);
+    Optional<UrlEntity> findByShortCode(String shortCode);
 }

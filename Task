@@ -5,3 +5,11 @@ Better validation
 Exception handling at the controller level (e.g., @ControllerAdvice)?
 Rate limiting for URL shortening?
 Database caching (Redis) for better performance?
+
+
+### Additional Recommendations
+Add Indexes: Ensure proper database indexes on shortCode for fast lookups.
+Input Validation: Validate URLs before saving them.
+Duplicate Handling: Handle cases where the same short code is generated twice.
+Tracking: Consider adding visit tracking and analytics.
+Base URL Handling: Store or configure the base URL (domain) separately from the short code.

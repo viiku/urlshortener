@@ -15,7 +15,6 @@ import java.util.Date;
 public class UrlResponse {
     private String originalUrl;
     private String shortUrl;
-    private String shortCode;
     private LocalDateTime createdAt;
     private LocalDateTime expiryDate;
 }

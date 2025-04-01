@@ -49,6 +49,6 @@ public class UrlMapper implements BaseMapper<UrlEntity, Url> {
             return null;
         }
 
-        return new UrlResponse(url.getOriginalUrl(), url.getShortUrl(), url.getShortCode(), url.getCreatedAt(), url.getExpiryDate());
+        return new UrlResponse(url.getOriginalUrl(), url.getShortUrl(), url.getCreatedAt(), url.getExpiryDate());
     }
 }
