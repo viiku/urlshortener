@@ -35,10 +35,6 @@ public abstract class BaseEntity {
     @PrePersist
     public void prePersist() {
 
-        /**
-         * Ensures @param createdAt is set at creation (@PrePersist).
-         * Ensures @param updatedAt is set at creation (@PrePersist).
-         */
         this.createdAt = Optional.ofNullable(this.createdAt)
                 .orElse(LocalDateTime.now());
 
