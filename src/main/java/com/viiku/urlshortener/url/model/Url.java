@@ -11,7 +11,10 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- *
+ * Currently this class has no use, we're mapping UrlResponse from this
+ * We can keep this class some other purpose, if we want to add more
+ * features then this can be used, right now it is being used to map
+ * UrlResponse, which we can obviously do without using it.
  */
 
 @Getter
